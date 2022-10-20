@@ -2,13 +2,14 @@ import time
 import warnings
 from importlib.util import find_spec
 from pathlib import Path
-from typing import Any, Callable, Dict, List
+from typing import Any, Callable, Dict, List, Iterable
 
 import hydra
 from omegaconf import DictConfig
 from pytorch_lightning import Callback
 from pytorch_lightning.loggers import LightningLoggerBase
 from pytorch_lightning.utilities import rank_zero_only
+from torchtext.vocab import build_vocab_from_iterator, Vocab
 
 from src.utils import pylogger, rich_utils
 
@@ -203,3 +204,13 @@ def close_loggers() -> None:
         if wandb.run:
             log.info("Closing wandb!")
             wandb.finish()
+
+
+def prepare_vocab(texts: Iterable[str]) -> Vocab:
+    def yield_tokens(data_iter: Iterable[str]):
+        for text in data_iter:
+            yield text.split()
+
+    vocab = build_vocab_from_iterator(yield_tokens(texts), specials=["<unk>"])
+    vocab.set_default_index(vocab["<unk>"])
+    return vocab

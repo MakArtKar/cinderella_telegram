@@ -1,6 +1,12 @@
+# --------- project --------- #
+numpy
+pandas
+nltk
+
 # --------- pytorch --------- #
 torch>=1.10.0
 torchvision>=0.11.0
+torchtext
 pytorch-lightning==1.7.1
 torchmetrics==0.10.0
 
@@ -10,7 +16,7 @@ hydra-colorlog==1.2.0
 hydra-optuna-sweeper==1.2.0
 
 # --------- loggers --------- #
-# wandb
+wandb
 # neptune-client
 # mlflow
 # comet-ml
@@ -20,4 +26,5 @@ pyrootutils     # standardizing the project root setup
 pre-commit      # hooks for applying linters on commit
 rich            # beautiful text formatting in terminal
 pytest          # tests
+matplotlib
 # sh            # for running bash commands in some tests (linux/macos only)
